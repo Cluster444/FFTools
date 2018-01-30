@@ -1,0 +1,7 @@
+#!/bin/bash
+
+FLATC_BIN="./bin/flatc"
+SCHEMA_DIR="./FFData/schemas"
+SRC_DIR="./FFData"
+
+$FLATC_BIN -n -o "$SRC_DIR" $SCHEMA_DIR/*.fbs

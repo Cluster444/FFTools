@@ -1,0 +1,33 @@
+#!/bin/sh
+
+DATA_DIR="FFData/data"
+SCHEMA_DIR="FFData/schemas"
+STATIC_DATA_JSON="${DATA_DIR}/StaticData.json"
+STATIC_DATA_SCHEMA="${SCHEMA_DIR}/StaticData.fbs"
+CSV2JSON="./bin/csv2json"
+FLATC="./bin/flatc"
+
+# Convert each CSV file to JSON if the CSV is newer
+# than the existing JSON to support incremental building
+for csv_file in ${DATA_DIR}/*.csv
+do
+  basename=$(basename $csv_file .csv)
+  json_file="${DATA_DIR}/${basename}.json"
+  if [[ $csv_file -nt $json_file ]]
+  then
+    echo Converting $filename to JSON
+    $CSV2JSON $file > ${DATA_DIR}/${filename}.json
+  else
+    echo "Skipping $csv_file"
+  fi
+done
+
+echo Assembling Static Data
+
+echo "{" > "${STATIC_DATA_JSON}"
+echo -n "  \"monsters\":" >> "${STATIC_DATA_JSON}"
+cat ${DATA_DIR}/Monsters.json >> "${STATIC_DATA_JSON}"
+echo "}" >> "${STATIC_DATA_JSON}"
+
+echo "Building Static Data Binary"
+$FLATC -b ${STATIC_DATA_SCHEMA} ${STATIC_DATA_JSON}

@@ -1,0 +1,13 @@
+﻿include "monster.fbs";
+
+namespace FFTools.Data;
+
+file_identifier "FF1D";
+file_extension "ffd";
+
+table StaticData
+{
+	monsters:[Monster];
+}
+
+root_type StaticData;

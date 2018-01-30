@@ -1,0 +1,13 @@
+namespace FFTools.Data;
+
+table Monster {
+  name:string (required, key);
+  experience:ushort;
+  gil:ushort;
+  hp:ushort;
+  attack:ubyte;
+  num_attacks:ubyte;
+  hit:ubyte;
+  defense:ubyte;
+  magic_defense:ubyte;
+}
